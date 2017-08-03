@@ -6,9 +6,10 @@
 // Implement index, show, create, update, and destroy functionality
 */
 
-var express = require('express');
-var bodyParser = require('body-parser');
-candyRouter = express.Router();
+var express 		= require('express');
+var app				= express();
+var bodyParser 		= require('body-parser');
+var candyRouter 	= express.Router();
 
 // What would need to go into candies in order to pass our first test?
 var candies = [
@@ -23,36 +24,43 @@ var candies = [
 	{id:9, name: "nerds", color: "red, orange, yellow, green, purple, pink"},
 ];
 
-candyRouter.get('/', function(req,res) {
-	// What would go here? 
-	// Hint: we want all candies in JSON format
+// get all candies
+candyRouter.get('/', function(req, res) {
+	console.log("we've got lots of candy!");
 	res.send(candies);
-	console.log("we've got lots of candy");
 });
 
 // Fill out the rest of the routes here
 // Implement index, show, create, update, and destroy functionality
 
+
+// get candy by id
 candyRouter.get('/:id', function(req, res) {
-	res.send(candies, [req.params.id-1]);
+	res.send(candies[req.params.id -1]);
 	console.log("we've got this specific candy");
 });
 
-/*
+
+// post new candy
 candyRouter.post('/', function(req, res) {
-	res.send();
-	console.log("we've got more candy");
+	candies.push(req.body);
+	res.send(req.body);
 });
 
-candyRouter.put('/', function(req, res) {
-	res.send();
-	console.log("we're updating our candy");
+
+
+// update a candy
+candyRouter.put('/:id', function(req, res) {
+	candies[req.params.id -1] = req.body;
+	res.send(req.body);
 });
 
-candyRouter.delete('/', function(req, res) {
-	res.send();
-	console.log("we've ate the candy");
+
+// delete candy
+candyRouter.delete('/:id', function(req, res) {
+	candies.splice(req.params.id-1, 1);
+	res.send({"message": "candy deleted"});
 });
-*/
+
 
 module.exports = candyRouter;
